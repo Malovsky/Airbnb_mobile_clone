@@ -38,7 +38,6 @@ export default function SignUpScreen({ setToken }) {
               description: description,
             }
           );
-          console.log(response.data);
           setToken(response.data.token);
         } else {
           setError("Les 2 MDP ne sont pas identiques !");

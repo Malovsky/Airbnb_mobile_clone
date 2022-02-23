@@ -97,15 +97,17 @@ export default function App() {
                       >
                         {() => <HomeScreen />}
                       </Stack.Screen>
-
-                      <Stack.Screen
+                      {/* ------------------------------------------------------------------------------------- */}
+                      {/* Quand depuis la tab barre on navige vers une autre page, on la déclare comme ça */}
+                      {/* ------------------------------------------------------------------------------------- */}
+                      {/* <Stack.Screen
                         name="Profile"
                         options={{
                           title: "User Profile",
                         }}
                       >
                         {() => <ProfileScreen />}
-                      </Stack.Screen>
+                      </Stack.Screen> */}
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>
@@ -164,7 +166,7 @@ export default function App() {
                           title: "Profile",
                         }}
                       >
-                        {() => <ProfileScreen />}
+                        {() => <ProfileScreen setToken={setToken} />}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}
