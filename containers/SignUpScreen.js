@@ -7,8 +7,10 @@ import {
   Text,
   TextInput,
   View,
+  ScrollView,
   Image,
   TouchableOpacity,
+  KeyboardAvoidingView,
 } from "react-native";
 
 export default function SignUpScreen({ setToken }) {
@@ -58,7 +60,7 @@ export default function SignUpScreen({ setToken }) {
   };
 
   return (
-    <View>
+    <ScrollView>
       <View>
         <View style={styles.home_logo_container}>
           <Image
@@ -102,7 +104,7 @@ export default function SignUpScreen({ setToken }) {
 
         <Text style={styles.err_signup}>{error}</Text>
         <TouchableOpacity style={styles.btn} onPress={createAccount}>
-          <Text>SIGN IN</Text>
+          <Text>Sign up</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
@@ -114,7 +116,7 @@ export default function SignUpScreen({ setToken }) {
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -126,14 +128,14 @@ const styles = StyleSheet.create({
   },
 
   home_logo: {
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
   },
 
   title: {
-    marginTop: 15,
+    marginTop: 5,
     alignSelf: "center",
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: "bold",
     color: "#717171",
   },
@@ -172,6 +174,17 @@ const styles = StyleSheet.create({
 
   btn: {
     alignSelf: "center",
+    borderTopWidth: 3,
+    borderRightWidth: 3,
+    borderBottomWidth: 3,
+    borderLeftWidth: 3,
+    paddingTop: 20,
+    paddingBottom: 20,
+    paddingLeft: 50,
+    paddingRight: 50,
+    borderRadius: 30,
+    borderColor: "#D96466",
+    margin: 10,
   },
 
   link_to_signin: {
