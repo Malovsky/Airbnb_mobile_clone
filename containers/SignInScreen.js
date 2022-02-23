@@ -1,4 +1,6 @@
 import { useNavigation } from "@react-navigation/core";
+import { useState } from "react";
+import axios from "axios";
 import {
   StyleSheet,
   Button,
@@ -11,6 +13,29 @@ import {
 
 export default function SignInScreen({ setToken }) {
   const navigation = useNavigation();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [error, setError] = useState("");
+
+  const logIn = async () => {
+    try {
+      const response = await axios.post(
+        "https://express-airbnb-api.herokuapp.com/user/log_in",
+        {
+          email: email,
+          password: password,
+        }
+      );
+      console.log(response.data);
+      setToken(response.data.token);
+    } catch (error) {
+      console.log(error.response.status);
+      console.log(error.response.data);
+    }
+  };
+
   return (
     <View>
       <View>
@@ -23,26 +48,24 @@ export default function SignInScreen({ setToken }) {
         </View>
         <Text style={styles.title}>Sign in</Text>
         <View style={styles.signin_form}>
-          <TextInput style={styles.input_signin} placeholder="email" />
           <TextInput
             style={styles.input_signin}
+            onChangeText={(text) => setEmail(text)}
+            placeholder="email"
+          />
+          <TextInput
+            style={styles.input_signin}
+            onChangeText={(text) => setPassword(text)}
             placeholder="password"
             secureTextEntry={true}
           />
         </View>
 
-        <Text style={styles.err_signin}>Please fill all fields</Text>
+        <Text style={styles.err_signin}>{error}</Text>
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={logIn}>
           <Text>SIGN IN</Text>
         </TouchableOpacity>
-        <Button
-          title="Sign in"
-          onPress={async () => {
-            const userToken = "secret-token";
-            setToken(userToken);
-          }}
-        />
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("SignUp");

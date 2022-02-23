@@ -1,4 +1,6 @@
 import { useNavigation } from "@react-navigation/core";
+import { useState } from "react";
+import axios from "axios";
 import {
   StyleSheet,
   Button,
@@ -11,6 +13,50 @@ import {
 
 export default function SignUpScreen({ setToken }) {
   const navigation = useNavigation();
+
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [description, setDescription] = useState("");
+
+  const [error, setError] = useState("");
+
+  const createAccount = async () => {
+    try {
+      if ((email, username, password, confirmPassword, description)) {
+        if (password === confirmPassword) {
+          setError("");
+          const response = await axios.post(
+            "https://express-airbnb-api.herokuapp.com/user/sign_up",
+            {
+              email: email,
+              username: username,
+              password: password,
+              description: description,
+            }
+          );
+          console.log(response.data);
+          setToken(response.data.token);
+        } else {
+          setError("Les 2 MDP ne sont pas identiques !");
+        }
+      } else {
+        setError("Remplir tous les champs");
+      }
+    } catch (error) {
+      console.log(error.response.status);
+      console.log(error.response.data);
+
+      if (
+        error.response.data.error === "This username already has an account." ||
+        error.response.data.error === "This email already has an account."
+      ) {
+        setError(error.response.data.error);
+      }
+    }
+  };
+
   return (
     <View>
       <View>
@@ -23,37 +69,41 @@ export default function SignUpScreen({ setToken }) {
         </View>
         <Text style={styles.title}>Sign up</Text>
         <View style={styles.signup_form}>
-          <TextInput style={styles.input_signup} placeholder="email" />
-          <TextInput style={styles.input_signup} placeholder="username" />
+          <TextInput
+            style={styles.input_signup}
+            onChangeText={(text) => setEmail(text)}
+            placeholder="email"
+          />
+          <TextInput
+            style={styles.input_signup}
+            onChangeText={(text) => setUsername(text)}
+            placeholder="username"
+          />
           <TextInput
             multiline={true}
+            onChangeText={(text) => setDescription(text)}
             numberOfLines={4}
             style={styles.textarea_signup}
             placeholder="Describe yourself in a few words..."
           />
           <TextInput
+            onChangeText={(text) => setPassword(text)}
             style={styles.input_signup}
             placeholder="password"
             secureTextEntry={true}
           />
           <TextInput
+            onChangeText={(text) => setConfirmPassword(text)}
             style={styles.input_signup}
             placeholder="confirm password"
             secureTextEntry={true}
           />
         </View>
 
-        <Text style={styles.err_signup}>Password must be the same</Text>
-        <TouchableOpacity>
+        <Text style={styles.err_signup}>{error}</Text>
+        <TouchableOpacity style={styles.btn} onPress={createAccount}>
           <Text>SIGN IN</Text>
         </TouchableOpacity>
-        <Button
-          title="Sign up"
-          onPress={async () => {
-            const userToken = "secret-token";
-            setToken(userToken);
-          }}
-        />
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("SignIn");
@@ -117,6 +167,10 @@ const styles = StyleSheet.create({
 
   err_signup: {
     color: "#D96466",
+    alignSelf: "center",
+  },
+
+  btn: {
     alignSelf: "center",
   },
 
