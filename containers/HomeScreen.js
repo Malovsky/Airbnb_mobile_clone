@@ -45,20 +45,37 @@ export default function HomeScreen() {
               <View style={styles.card_img_container_rbnb}>
                 <ImageBackground
                   style={styles.card_img_rbnb}
-                  source={item.photos[0]}
-                  // source={{ uri: `${item.photos[0]}` }}
+                  source={{ uri: item.photos[0].url }}
                   resizeMode="cover"
-                />
+                >
+                  <Text style={styles.card_price_rbnb}>{item.price} €</Text>
+                </ImageBackground>
               </View>
               <View style={styles.card_details_rbnb}>
-                <View>
-                  <Text style={styles.card_details_title_rbnb}>
+                <View style={styles.card_details_title_container_rbnb}>
+                  <Text
+                    style={styles.card_details_title_rbnb}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                  >
                     {item.title}
                   </Text>
-                  <Text>⭐️⭐️⭐️⭐️</Text>
+                  <View style={styles.card_details_rating_rbnb}>
+                    <Text>⭐️⭐️⭐️⭐️⭐️</Text>
+                    <Text>
+                      <ion-icon name="star-outline"></ion-icon>
+                    </Text>
+                    <Text> {item.reviews} reviews</Text>
+                  </View>
                 </View>
 
-                <View style={styles.card_profile_picture_rbnb}></View>
+                <View style={styles.card_profile_picture_container_rbnb}>
+                  <Image
+                    style={styles.card_profile_picture_rbnb}
+                    source={{ uri: item.user.account.photo.url }}
+                    resizeMode="cover"
+                  />
+                </View>
               </View>
             </View>
           );
@@ -71,26 +88,55 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   card_rbnb: {
     height: 300,
+    borderBottomColor: "#ECECEC",
+    borderBottomWidth: 2,
+    margin: 10,
+    paddingBottom: 5,
   },
   card_img_container_rbnb: {
-    flex: 2,
+    flex: 3,
+    paddingTop: 5,
+    paddingBottom: 5,
   },
   card_img_rbnb: {
     flex: 1,
+    justifyContent: "flex-end",
+  },
+  card_price_rbnb: {
+    color: "white",
+    fontSize: 20,
+    padding: 10,
+    width: "25%",
+    backgroundColor: "black",
+    textAlign: "center",
+    marginBottom: 20,
   },
   card_details_rbnb: {
     flexDirection: "row",
     flex: 1,
+    paddingTop: 5,
+    paddingBottom: 5,
+  },
+  card_details_title_container_rbnb: {
+    flex: 4,
   },
   card_details_title_rbnb: {
-    flex: 3,
-    fontSize: 15,
-    fontWeight: "bold",
+    fontSize: 20,
+  },
+  card_details_rating_rbnb: {
+    flexDirection: "row",
+    color: "#ECECEC",
+  },
+  card_profile_picture_container_rbnb: {
+    flex: 1,
+    alignItems: "center",
+    height: 70,
+    width: 70,
+    borderRadius: 50,
   },
   card_profile_picture_rbnb: {
-    backgroundColor: "red",
-    flex: 1,
-    fontSize: 15,
-    fontWeight: "bold",
+    height: 70,
+    width: 70,
+    borderRadius: 50,
   },
 });
