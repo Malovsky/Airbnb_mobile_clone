@@ -98,7 +98,7 @@ export default function App() {
                         {() => <HomeScreen />}
                       </Stack.Screen>
                       {/* ------------------------------------------------------------------------------------- */}
-                      {/* Quand depuis la tab barre on navige vers une autre page, on la déclare comme ça */}
+                      {/* Quand depuis la tab barre on navige vers une autre page, on la déclare comme ça. */}
                       {/* ------------------------------------------------------------------------------------- */}
                       {/* <Stack.Screen
                         name="Profile"
