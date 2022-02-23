@@ -9,6 +9,7 @@ import ProfileScreen from "./containers/ProfileScreen";
 import SignInScreen from "./containers/SignInScreen";
 import SignUpScreen from "./containers/SignUpScreen";
 import SettingsScreen from "./containers/SettingsScreen";
+import AroundMe from "./containers/AroundMe";
 import SplashScreen from "./containers/SplashScreen";
 
 const Tab = createBottomTabNavigator();
@@ -66,6 +67,7 @@ export default function App() {
           // User is signed in ! 🎉
           <Stack.Screen name="Tab" options={{ headerShown: false }}>
             {() => (
+              // NAVIGATION PAR TAB + OPTIONS
               <Tab.Navigator
                 screenOptions={{
                   headerShown: false,
@@ -73,6 +75,7 @@ export default function App() {
                   tabBarInactiveTintColor: "gray",
                 }}
               >
+                {/* ---------- TAB HOME ---------- */}
                 <Tab.Screen
                   name="TabHome"
                   options={{
@@ -87,9 +90,9 @@ export default function App() {
                       <Stack.Screen
                         name="Home"
                         options={{
-                          title: "My App",
-                          headerStyle: { backgroundColor: "red" },
-                          headerTitleStyle: { color: "white" },
+                          title: "Home",
+                          headerStyle: { backgroundColor: "white" },
+                          headerTitleStyle: { color: "black" },
                         }}
                       >
                         {() => <HomeScreen />}
@@ -106,13 +109,16 @@ export default function App() {
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>
+
+                {/* ---------- TAB AROUND ME ---------- */}
+
                 <Tab.Screen
-                  name="TabSettings"
+                  name="TabAroundMe"
                   options={{
-                    tabBarLabel: "Settings",
+                    tabBarLabel: "Around Me",
                     tabBarIcon: ({ color, size }) => (
                       <Ionicons
-                        name={"ios-options"}
+                        name={"location-outline"}
                         size={size}
                         color={color}
                       />
@@ -122,12 +128,43 @@ export default function App() {
                   {() => (
                     <Stack.Navigator>
                       <Stack.Screen
-                        name="Settings"
+                        name="Around Me"
                         options={{
-                          title: "Settings",
+                          title: "Around Me",
+                          headerStyle: { backgroundColor: "white" },
+                          headerTitleStyle: { color: "black" },
                         }}
                       >
-                        {() => <SettingsScreen setToken={setToken} />}
+                        {() => <AroundMe />}
+                      </Stack.Screen>
+                    </Stack.Navigator>
+                  )}
+                </Tab.Screen>
+
+                {/* ---------- TAB PROFILE ---------- */}
+
+                <Tab.Screen
+                  name="TabProfile"
+                  options={{
+                    tabBarLabel: "Profile",
+                    tabBarIcon: ({ color, size }) => (
+                      <Ionicons
+                        name={"person-outline"}
+                        size={size}
+                        color={color}
+                      />
+                    ),
+                  }}
+                >
+                  {() => (
+                    <Stack.Navigator>
+                      <Stack.Screen
+                        name="Profile"
+                        options={{
+                          title: "Profile",
+                        }}
+                      >
+                        {() => <ProfileScreen />}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}
