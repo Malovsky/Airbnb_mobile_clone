@@ -1,9 +1,21 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import {
+  Dimensions,
+  View,
+  Text,
+  StyleSheet,
+  ImageBackground,
+  Image,
+} from "react-native";
+import { SwiperFlatList } from "react-native-swiper-flatlist";
+import Stars from "../components/Stars";
+
+const { width } = Dimensions.get("window");
 
 const Room = (props) => {
   const id = props.route.params.id;
+  // test -> https://express-airbnb-api.herokuapp.com/rooms/58ff73cc1765a9979391c532
 
   const [room, setRoom] = useState();
   const [isLoading, setIsLoading] = useState(true);
@@ -23,12 +35,62 @@ const Room = (props) => {
 
     fetchData();
   }, [id]);
+
+  console.log(room);
   return isLoading ? (
     <Text>Loading</Text>
   ) : (
     <View style={styles.container_room_all}>
-      <View style={styles.room_image_container}></View>
-      <View style={styles.room_details_container}></View>
+      <View style={styles.room_image_container}>
+        <SwiperFlatList
+          autoplay
+          autoplayDelay={3}
+          autoplayLoop
+          showPagination
+          data={room.photos}
+          renderItem={({ item }) => (
+            <ImageBackground
+              style={styles.room_imgs_rbnb}
+              source={{ uri: item.url }}
+              resizeMode="cover"
+            >
+              <Text style={styles.card_price_rbnb}>{room.price} €</Text>
+            </ImageBackground>
+          )}
+        />
+      </View>
+
+      <View style={styles.room_details_container}>
+        <View style={styles.room_details_rbnb}>
+          <View style={styles.room_details_title_container_rbnb}>
+            <Text
+              style={styles.room_details_title_rbnb}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
+              {room.title}
+            </Text>
+
+            <View style={styles.room_details_rating_rbnb}>
+              <Stars rating={room.ratingValue}></Stars>
+              <Text style={styles.room_details_reviews_rbnb}>
+                {room.reviews} reviews
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.room_profile_picture_container_rbnb}>
+            <Image
+              style={styles.room_profile_picture_rbnb}
+              source={{ uri: room.user.account.photo.url }}
+              resizeMode="cover"
+            />
+          </View>
+        </View>
+        <Text numberOfLines={4} ellipsizeMode="tail">
+          {room.description}
+        </Text>
+      </View>
       <View style={styles.room_map_container}></View>
     </View>
   );
@@ -38,15 +100,62 @@ const styles = StyleSheet.create({
   container_room_all: { flex: 1 },
 
   room_image_container: {
-    flex: 2,
-    backgroundColor: "blue",
+    flex: 3,
+  },
+  room_imgs_rbnb: {
+    width,
+    resizeMode: "cover",
+    justifyContent: "flex-end",
+  },
+  card_price_rbnb: {
+    color: "white",
+    fontSize: 20,
+    padding: 10,
+    width: "25%",
+    backgroundColor: "black",
+    textAlign: "center",
+    marginBottom: 20,
   },
   room_details_container: {
-    flex: 1,
+    flex: 2,
     backgroundColor: "white",
+
+    padding: 10,
+  },
+  room_details_rating_rbnb: {
+    flexDirection: "row",
+  },
+  room_details_title_container_rbnb: {
+    flex: 4,
+  },
+  room_details_rbnb: {
+    flexDirection: "row",
+    flex: 1,
+    paddingTop: 5,
+    paddingBottom: 5,
+  },
+  room_details_title_rbnb: {
+    fontSize: 20,
+    marginBottom: 20,
+  },
+  room_details_reviews_rbnb: {
+    color: "gray",
+    marginLeft: 5,
+  },
+  room_profile_picture_container_rbnb: {
+    flex: 1,
+    alignItems: "center",
+    height: 70,
+    width: 70,
+    borderRadius: 50,
+  },
+  room_profile_picture_rbnb: {
+    height: 70,
+    width: 70,
+    borderRadius: 50,
   },
   room_map_container: {
-    flex: 2,
+    flex: 3,
     backgroundColor: "red",
   },
 });

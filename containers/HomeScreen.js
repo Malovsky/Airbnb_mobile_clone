@@ -28,6 +28,7 @@ export default function HomeScreen() {
           "https://express-airbnb-api.herokuapp.com/rooms"
         );
         setData(response.data);
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -36,7 +37,9 @@ export default function HomeScreen() {
     fetchData();
   }, []);
 
-  return (
+  return isLoading ? (
+    <Text>Loading ...</Text>
+  ) : (
     <View>
       <FlatList
         data={data}
