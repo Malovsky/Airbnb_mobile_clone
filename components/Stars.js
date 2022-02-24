@@ -5,22 +5,19 @@ const Stars = ({ rating }) => {
   const tabStars = [];
 
   for (let i = 0; i < 5; i++) {
-    if (i < rating) {
-      tabStars.push(
-        <>
-          <FontAwesome key={i} name="star" size={18} color="#FFB100" />
-          <Text> </Text>
-        </>
-      );
-      //   tabStars.push(<Text> </Text>);
-    } else {
-      tabStars.push(
-        <>
-          <FontAwesome key={i} name="star" size={18} color="grey" />
-          <Text> </Text>
-        </>
-      );
-    }
+    i < rating
+      ? tabStars.push(
+          <>
+            <FontAwesome key={i} name="star" size={18} color="#FFB100" />
+            <Text> </Text>
+          </>
+        )
+      : tabStars.push(
+          <>
+            <FontAwesome key={i} name="star" size={18} color="grey" />
+            <Text> </Text>
+          </>
+        );
   }
 
   return tabStars;

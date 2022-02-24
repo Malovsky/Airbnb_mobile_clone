@@ -6,6 +6,7 @@ import {
   FlatList,
   Image,
   ImageBackground,
+  TouchableOpacity,
   StyleSheet,
 } from "react-native";
 import { useState, useEffect } from "react";
@@ -43,7 +44,7 @@ export default function HomeScreen() {
         renderItem={({ item }) => {
           return (
             <View style={styles.card_rbnb}>
-              <View style={styles.card_img_container_rbnb}>
+              <TouchableOpacity style={styles.card_img_container_rbnb}>
                 <ImageBackground
                   style={styles.card_img_rbnb}
                   source={{ uri: item.photos[0].url }}
@@ -51,7 +52,7 @@ export default function HomeScreen() {
                 >
                   <Text style={styles.card_price_rbnb}>{item.price} €</Text>
                 </ImageBackground>
-              </View>
+              </TouchableOpacity>
               <View style={styles.card_details_rbnb}>
                 <View style={styles.card_details_title_container_rbnb}>
                   <Text
