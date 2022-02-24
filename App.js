@@ -11,6 +11,7 @@ import SignUpScreen from "./containers/SignUpScreen";
 import SettingsScreen from "./containers/SettingsScreen";
 import AroundMe from "./containers/AroundMe";
 import SplashScreen from "./containers/SplashScreen";
+import Room from "./containers/Room";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -97,6 +98,12 @@ export default function App() {
                       >
                         {() => <HomeScreen />}
                       </Stack.Screen>
+
+                      <Stack.Screen
+                        name={"Room"}
+                        component={Room}
+                      ></Stack.Screen>
+
                       {/* ------------------------------------------------------------------------------------- */}
                       {/* Quand depuis la tab barre on navige vers une autre page, on la déclare comme ça. */}
                       {/* ------------------------------------------------------------------------------------- */}

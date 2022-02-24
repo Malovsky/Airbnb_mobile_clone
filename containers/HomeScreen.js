@@ -44,7 +44,14 @@ export default function HomeScreen() {
         renderItem={({ item }) => {
           return (
             <View style={styles.card_rbnb}>
-              <TouchableOpacity style={styles.card_img_container_rbnb}>
+              <TouchableOpacity
+                style={styles.card_img_container_rbnb}
+                onPress={() => {
+                  navigation.navigate("Room", {
+                    id: item._id,
+                  });
+                }}
+              >
                 <ImageBackground
                   style={styles.card_img_rbnb}
                   source={{ uri: item.photos[0].url }}
@@ -130,6 +137,7 @@ const styles = StyleSheet.create({
   },
   card_details_reviews_rbnb: {
     color: "gray",
+    marginLeft: 5,
   },
   card_profile_picture_container_rbnb: {
     flex: 1,
