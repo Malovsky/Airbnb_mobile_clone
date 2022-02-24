@@ -9,6 +9,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { useState, useEffect } from "react";
+import Stars from "../components/Stars";
 import axios from "axios";
 
 export default function HomeScreen() {
@@ -61,11 +62,10 @@ export default function HomeScreen() {
                     {item.title}
                   </Text>
                   <View style={styles.card_details_rating_rbnb}>
-                    <Text>⭐️⭐️⭐️⭐️⭐️</Text>
-                    <Text>
-                      <ion-icon name="star-outline"></ion-icon>
+                    <Stars rating={item.ratingValue}></Stars>
+                    <Text style={styles.card_details_reviews_rbnb}>
+                      {item.reviews} reviews
                     </Text>
-                    <Text> {item.reviews} reviews</Text>
                   </View>
                 </View>
 
@@ -122,10 +122,13 @@ const styles = StyleSheet.create({
   },
   card_details_title_rbnb: {
     fontSize: 20,
+    marginBottom: 20,
   },
   card_details_rating_rbnb: {
     flexDirection: "row",
-    color: "#ECECEC",
+  },
+  card_details_reviews_rbnb: {
+    color: "gray",
   },
   card_profile_picture_container_rbnb: {
     flex: 1,
