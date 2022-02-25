@@ -60,7 +60,6 @@ export default function AroundMe() {
       showsUserLocation={true}
     >
       {data.map((item, index) => {
-        console.log(item);
         return (
           <MapView.Marker
             key={index}

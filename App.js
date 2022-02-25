@@ -150,7 +150,7 @@ export default function App() {
                         {() => <AroundMe />}
                       </Stack.Screen>
 
-                      {/* Depuis la tab "Home" on peut accéder à la page "Room" */}
+                      {/* Depuis la tab "Around Me" on peut accéder à la page "Room" */}
                       <Stack.Screen
                         name={"Room"}
                         component={Room}

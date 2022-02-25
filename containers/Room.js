@@ -59,8 +59,6 @@ const Room = (props) => {
     fetchData();
   }, [id]);
 
-  console.log(room);
-
   return isLoading ? (
     <Text>Loading</Text>
   ) : (
