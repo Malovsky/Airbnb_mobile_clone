@@ -10,6 +10,8 @@ import {
 } from "react-native";
 import { SwiperFlatList } from "react-native-swiper-flatlist";
 import Stars from "../components/Stars";
+import * as Location from "expo-location";
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 
 const { width } = Dimensions.get("window");
 
@@ -33,7 +35,28 @@ const Room = (props) => {
       }
     };
 
+    const getPermission = async () => {
+      try {
+        const { status } = await Location.requestForegroundPermissionsAsync();
+
+        if (status === "granted") {
+          console.log("On passe à la suite");
+          //Récupérer les coordonnées GPS
+          const location = await Location.getCurrentPositionAsync();
+
+          setLatitude(location.coords.latitude);
+          setLongitude(location.coords.longitude);
+          setIsLoading(false);
+        } else {
+          alert("Permission Refusée !");
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
     fetchData();
+    getPermission();
   }, [id]);
 
   console.log(room);
@@ -91,7 +114,37 @@ const Room = (props) => {
           {room.description}
         </Text>
       </View>
-      <View style={styles.room_map_container}></View>
+      <View style={styles.room_map_container}>
+        <MapView
+          style={{ height: "100%", width: "100%" }}
+          provider={PROVIDER_GOOGLE}
+          initialRegion={{
+            latitude: room.location[1],
+            longitude: room.location[0],
+            latitudeDelta: 0.1,
+            longitudeDelta: 0.1,
+          }}
+          showsUserLocation={true}
+        >
+          <MapView.Marker
+            coordinate={{
+              latitude: room.location[1],
+              longitude: room.location[0],
+            }}
+          />
+          {/* {coords.map((item, index) => {
+          return (
+            <MapView.Marker
+              key={index}
+              coordinate={{
+                latitude: item.latitude,
+                longitude: item.longitude,
+              }}
+            />
+          );
+        })} */}
+        </MapView>
+      </View>
     </View>
   );
 };
@@ -156,7 +209,10 @@ const styles = StyleSheet.create({
   },
   room_map_container: {
     flex: 3,
-    backgroundColor: "red",
+
+    alignItems: "center",
+    justifyContent: "center",
+    // backgroundColor: "green",
   },
 });
 

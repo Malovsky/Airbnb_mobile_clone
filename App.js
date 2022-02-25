@@ -10,6 +10,7 @@ import SignInScreen from "./containers/SignInScreen";
 import SignUpScreen from "./containers/SignUpScreen";
 import SettingsScreen from "./containers/SettingsScreen";
 import AroundMe from "./containers/AroundMe";
+import Logo from "./components/Logo";
 import SplashScreen from "./containers/SplashScreen";
 import Room from "./containers/Room";
 
@@ -92,6 +93,7 @@ export default function App() {
                         name="Home"
                         options={{
                           title: "Home",
+                          headerTitle: () => <Logo size={"small"} />,
                           headerStyle: { backgroundColor: "white" },
                           headerTitleStyle: { color: "black" },
                         }}
@@ -99,6 +101,7 @@ export default function App() {
                         {() => <HomeScreen />}
                       </Stack.Screen>
 
+                      {/* Depuis la tab "Home" on peut accéder à la page "Room" */}
                       <Stack.Screen
                         name={"Room"}
                         component={Room}
