@@ -20,6 +20,8 @@ const Room = (props) => {
   // test -> https://express-airbnb-api.herokuapp.com/rooms/58ff73cc1765a9979391c532
 
   const [room, setRoom] = useState();
+  const [latitude, setLatitude] = useState();
+  const [longitude, setLongitude] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -40,13 +42,11 @@ const Room = (props) => {
         const { status } = await Location.requestForegroundPermissionsAsync();
 
         if (status === "granted") {
-          console.log("On passe à la suite");
           //Récupérer les coordonnées GPS
           const location = await Location.getCurrentPositionAsync();
 
           setLatitude(location.coords.latitude);
           setLongitude(location.coords.longitude);
-          setIsLoading(false);
         } else {
           alert("Permission Refusée !");
         }
@@ -55,11 +55,12 @@ const Room = (props) => {
       }
     };
 
-    fetchData();
     getPermission();
+    fetchData();
   }, [id]);
 
   console.log(room);
+
   return isLoading ? (
     <Text>Loading</Text>
   ) : (
@@ -119,8 +120,8 @@ const Room = (props) => {
           style={{ height: "100%", width: "100%" }}
           provider={PROVIDER_GOOGLE}
           initialRegion={{
-            latitude: room.location[1],
-            longitude: room.location[0],
+            latitude: latitude,
+            longitude: longitude,
             latitudeDelta: 0.1,
             longitudeDelta: 0.1,
           }}
@@ -132,17 +133,6 @@ const Room = (props) => {
               longitude: room.location[0],
             }}
           />
-          {/* {coords.map((item, index) => {
-          return (
-            <MapView.Marker
-              key={index}
-              coordinate={{
-                latitude: item.latitude,
-                longitude: item.longitude,
-              }}
-            />
-          );
-        })} */}
         </MapView>
       </View>
     </View>

@@ -3,7 +3,6 @@ import Stars from "./Stars";
 
 // TODO
 const RoomDetails = (item) => {
-  console.log(item);
   return (
     <View style={styles.card_details_rbnb}>
       <View style={styles.card_details_title_container_rbnb}>
